@@ -11,8 +11,12 @@ public class PuzzleCreator : MonoBehaviour
     public Sprite selectedImage; // Imagen seleccionada para el puzzle
     public int gridSize; // Tamaño de la grilla del puzzle
     public GameObject _winCanvas;
-
+    public AudioSource swapPiece;
+    public AudioClip swapClip;
+    public AudioSource winSound;
+    public AudioClip winClip;
     public GameObject _canvas;
+    public MusicManager musicManager; // Referencia al MusicManager
 
     [SerializeField] private List<DraggablePiece> pieces = new List<DraggablePiece>();
     [SerializeField] private List<Vector3> correctPositions = new List<Vector3>();
@@ -23,6 +27,8 @@ public class PuzzleCreator : MonoBehaviour
 
     private int pieceWidth; // Ancho para las piezas del rompecabezas
     private int pieceHeight; // Alto para las piezas del rompecabezas
+
+    private bool puzzleCompleted = false; // Estado del rompecabezas
 
     private void Start()
     {
@@ -73,6 +79,8 @@ public class PuzzleCreator : MonoBehaviour
                 pieces.Add(piece);
             }
         }
+
+        puzzleCompleted = false; // Reset puzzle completion state
     }
 
     // Method to create puzzle with shuffled pieces
@@ -133,13 +141,13 @@ public class PuzzleCreator : MonoBehaviour
 
     void Update()
     {
-        if (_canvas.activeSelf)
+        if (_canvas.activeSelf && !puzzleCompleted)
         {
-            Debug.Log("enabled");
             CheckCompletion();
         }
     }
 
+  
     public void CheckCompletion()
     {
         for (int i = 0; i < pieces.Count; i++)
@@ -151,7 +159,13 @@ public class PuzzleCreator : MonoBehaviour
             }
         }
         Debug.Log("Puzzle completed!");
+        winSound.PlayOneShot(winClip);
         _winCanvas.SetActive(true);
+        puzzleCompleted = true; // Set puzzle completion state to true
+        if (musicManager != null)
+        {
+            musicManager.PauseMusic(); // Pause the background music
+        }
     }
 
     public void UpdatePiecePositions(DraggablePiece piece1, DraggablePiece piece2)

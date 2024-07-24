@@ -80,6 +80,7 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         rectTransform.localPosition = otherPiece.rectTransform.localPosition;
         otherPiece.rectTransform.localPosition = originalPosition;
         movementCounter++;
+        puzzleCreator.swapPiece.PlayOneShot(puzzleCreator.swapClip);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
