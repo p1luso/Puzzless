@@ -40,16 +40,21 @@ public class ContentManager : MonoBehaviour
     // Reference to the PuzzleCreator
     public PuzzleCreator puzzleCreator;
 
+    [Header("Audio")]
+    public AudioSource buttonAudioSource; // AudioSource para los sonidos de los botones
+    public AudioClip buttonClickSound; // Clip de sonido para el click del botón
+
     void Start()
     {
         _canvasSelection.SetActive(true);
         _canvasPuzzle.SetActive(false);
-        nextButton.onClick.AddListener(NextContent);
-        prevButton.onClick.AddListener(PreviousContent);
-
-        button3x3.onClick.AddListener(() => StartPuzzle(3));
-        button4x4.onClick.AddListener(() => StartPuzzle(4));
-        button5x5.onClick.AddListener(() => StartPuzzle(5));
+        
+        // Vincular métodos que reproducen sonido a los eventos onClick de los botones
+        nextButton.onClick.AddListener(() => { PlayButtonClickSound(); NextContent(); });
+        prevButton.onClick.AddListener(() => { PlayButtonClickSound(); PreviousContent(); });
+        button3x3.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(3); });
+        button4x4.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(4); });
+        button5x5.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(5); });
 
         // Display initial content
         ShowContent();
@@ -166,6 +171,15 @@ public class ContentManager : MonoBehaviour
             _canvasPuzzle.SetActive(true);
             // Pass the selected image and grid size to the PuzzleCreator
             puzzleCreator.CreatePuzzleWithShuffle(selectedImage, gridSize);
+        }
+    }
+
+    // Método para reproducir el sonido de click del botón
+    private void PlayButtonClickSound()
+    {
+        if (buttonAudioSource != null && buttonClickSound != null)
+        {
+            buttonAudioSource.PlayOneShot(buttonClickSound);
         }
     }
 }
