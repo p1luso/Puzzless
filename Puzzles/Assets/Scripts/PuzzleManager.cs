@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class PuzzleCreator : MonoBehaviour
@@ -11,13 +12,13 @@ public class PuzzleCreator : MonoBehaviour
     public Sprite selectedImage; // Imagen seleccionada para el puzzle
     public int gridSize; // Tamaño de la grilla del puzzle
     public GameObject _winCanvas;
-    public AudioSource swapPiece;
-    public AudioClip swapClip;
-    public AudioSource winSound;
+    public AudioSource winSoundSource;
     public AudioClip winClip;
+    public AudioSource swapPiece; // AudioSource para el sonido de movimiento
+    public AudioClip swapClip; // AudioClip para el sonido de movimiento
     public GameObject _canvas;
     public MusicManager musicManager; // Referencia al MusicManager
-
+    public BotonesPuzzle puzzleButtons;
     [SerializeField] private List<DraggablePiece> pieces = new List<DraggablePiece>();
     [SerializeField] private List<Vector3> correctPositions = new List<Vector3>();
     private List<Sprite> correctSlices = new List<Sprite>();
@@ -147,7 +148,6 @@ public class PuzzleCreator : MonoBehaviour
         }
     }
 
-  
     public void CheckCompletion()
     {
         for (int i = 0; i < pieces.Count; i++)
@@ -159,12 +159,24 @@ public class PuzzleCreator : MonoBehaviour
             }
         }
         Debug.Log("Puzzle completed!");
-        winSound.PlayOneShot(winClip);
-        _winCanvas.SetActive(true);
+        winSoundSource.PlayOneShot(winClip);
         puzzleCompleted = true; // Set puzzle completion state to true
         if (musicManager != null)
         {
             musicManager.PauseMusic(); // Pause the background music
+        }
+
+        StartCoroutine(DisablePuzzleInteractionWithDelay(0.5f)); // Desactivar interacciones del puzzle después de un retraso
+    }
+
+    private IEnumerator DisablePuzzleInteractionWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        foreach (var piece in pieces)
+        {
+            piece.GetComponent<DraggablePiece>().enabled = false;
+            puzzleButtons.ShowWinCanvas();
+
         }
     }
 
@@ -175,6 +187,14 @@ public class PuzzleCreator : MonoBehaviour
         int index2 = pieces.IndexOf(piece2);
         pieces[index1] = piece2;
         pieces[index2] = piece1;
+    }
+
+    public void PlaySlideSound()
+    {
+        if (swapPiece != null && swapClip != null)
+        {
+            swapPiece.PlayOneShot(swapClip);
+        }
     }
 
     private void SetPieceDimensions(int gridSize)

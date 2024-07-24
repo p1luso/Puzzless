@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,7 +10,7 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private Vector3 originalPosition;
     private Vector3 originalScale;
     private DraggablePiece targetPiece;
-    public static int movementCounter;
+    public static int movementCounter = 0;
     private bool isDragging = false;
     private float scaleIncrease = 1.2f; // Adjust the scale increase as needed
 
@@ -20,12 +20,7 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         canvas = GetComponentInParent<Canvas>();
         originalScale = rectTransform.localScale;
     }
-
-    private void Start()
-    {
-        movementCounter = 0;
-    }
-
+    
     public void Initialize(PuzzleCreator creator)
     {
         puzzleCreator = creator;
@@ -76,11 +71,11 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void SwapPositionWith(DraggablePiece otherPiece)
     {
+        movementCounter++;
         Vector3 tempPosition = rectTransform.localPosition;
         rectTransform.localPosition = otherPiece.rectTransform.localPosition;
         otherPiece.rectTransform.localPosition = originalPosition;
-        movementCounter++;
-        puzzleCreator.swapPiece.PlayOneShot(puzzleCreator.swapClip);
+        puzzleCreator.PlaySlideSound();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -88,6 +83,7 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         if (!isDragging)
         {
             rectTransform.localScale = originalScale * scaleIncrease; // Increase size when hovered
+            rectTransform.SetAsLastSibling(); // Move to the top of the hierarchy
         }
     }
 
