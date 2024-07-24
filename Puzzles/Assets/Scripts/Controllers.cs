@@ -10,38 +10,39 @@ public class BotonesPuzzle : MonoBehaviour
     public PuzzleCreator puzzleCreator; // Referencia al script PuzzleCreator
     public GameObject overlayPanel; // Panel transparente para detectar clics fuera de la imagen
     public Text timerText; // Texto UI para mostrar el temporizador
-    
+
     public Text movementText;
-    
+
     private float elapsedTime = 0f; // Tiempo transcurrido en segundos
     private bool isTimerRunning = false; // Estado del temporizador
 
     private float winTime;
-    
+
     public void Start()
     {
         overlayPanel.SetActive(false); // Asegurarse de que el panel esté inicialmente desactivado
-        timerText.text = "Time: 0s"; // Inicializar el texto del temporizador
-        movementText.text = "Movements: 0";
+        timerText.text = "Time: 0m 0s"; // Inicializar el texto del temporizador
+        movementText.text = "Moves: 0";
     }
 
     public void Update()
     {
-        movementText.text = "Movements: " + DraggablePiece.movementCounter;
+        movementText.text = "Moves: " + DraggablePiece.movementCounter;
         if (puzzleCanvas.isActiveAndEnabled && !winCanvas.isActiveAndEnabled)
         {
             isTimerRunning = true;
         }
         else if (winCanvas.isActiveAndEnabled)
         {
-            
             isTimerRunning = false;
             winTime = elapsedTime;
         }
         if (isTimerRunning)
         {
             elapsedTime += Time.deltaTime;
-            timerText.text = "Time: " + Mathf.FloorToInt(elapsedTime) + "s";
+            int minutes = Mathf.FloorToInt(elapsedTime / 60F);
+            int seconds = Mathf.FloorToInt(elapsedTime % 60F);
+            timerText.text = $"Time: {minutes}m {seconds}s";
         }
     }
 
@@ -78,6 +79,8 @@ public class BotonesPuzzle : MonoBehaviour
         menuCanvas.gameObject.SetActive(false); // Desactivar el canvas del menú
         ResetTimer(); // Reiniciar el temporizador
         isTimerRunning = true; // Iniciar el temporizador
+        DraggablePiece.movementCounter = 0; // Reiniciar el contador de movimientos
+        movementText.text = "Moves: 0"; // Reiniciar el texto del contador de movimientos
     }
 
     // Método para ocultar la imagen completa cuando no se necesite
@@ -90,6 +93,6 @@ public class BotonesPuzzle : MonoBehaviour
     private void ResetTimer()
     {
         elapsedTime = 0f; // Reiniciar el tiempo transcurrido
-        timerText.text = "Time: 0s"; // Reiniciar el texto del temporizador
+        timerText.text = "Time: 0m 0s"; // Reiniciar el texto del temporizador
     }
 }
