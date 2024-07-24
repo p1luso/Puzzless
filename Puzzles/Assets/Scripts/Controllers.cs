@@ -7,6 +7,8 @@ public class BotonesPuzzle : MonoBehaviour
     public Canvas menuCanvas; // Canvas del menú
     public Image puzzleImage; // Imagen completa del puzzle
     public Canvas winCanvas; // Canvas de victoria
+    public Canvas selecCanvas; // Canvas de victoria
+
     public PuzzleCreator puzzleCreator; // Referencia al script PuzzleCreator
     public GameObject overlayPanel; // Panel transparente para detectar clics fuera de la imagen
     public Text timerText; // Texto UI para mostrar el temporizador
@@ -74,6 +76,15 @@ public class BotonesPuzzle : MonoBehaviour
         PlayButtonClickSound();
         puzzleCanvas.gameObject.SetActive(false); // Desactivar el canvas del juego
         menuCanvas.gameObject.SetActive(true); // Activar el canvas del menú
+        winCanvas.gameObject.SetActive(false);
+        isTimerRunning = false; // Detener el temporizador
+        ResetTimer(); // Reiniciar el temporizador y contador de movimientos al volver al menú
+    }
+    public void VolverAlMenuSeleccion()
+    {
+        PlayButtonClickSound();
+        menuCanvas.gameObject.SetActive(false); // Desactivar el canvas del juego
+        selecCanvas.gameObject.SetActive(true); // Activar el canvas del menú
         winCanvas.gameObject.SetActive(false);
         isTimerRunning = false; // Detener el temporizador
         ResetTimer(); // Reiniciar el temporizador y contador de movimientos al volver al menú

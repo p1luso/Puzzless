@@ -1587,19 +1587,19 @@ MonoBehaviour:
   menuCanvas: {fileID: 2026953383}
   puzzleImage: {fileID: 2011179109}
   winCanvas: {fileID: 329845382}
+  selecCanvas: {fileID: 838123308}
   puzzleCreator: {fileID: 36959619}
   overlayPanel: {fileID: 1900185478}
   timerText: {fileID: 254643244}
-  buttonAudioSource: {fileID: 265238610}
-  buttonClickSound: {fileID: 8300000, guid: ddcdd007df01a33499d87b0e62f5fdc2, type: 3}
-  musicManager: {fileID: 36959622}
   movementText: {fileID: 997764188}
   winMovesText: {fileID: 1409889966}
   winTimeText: {fileID: 1215774889}
+  buttonAudioSource: {fileID: 265238610}
+  buttonClickSound: {fileID: 8300000, guid: ddcdd007df01a33499d87b0e62f5fdc2, type: 3}
+  musicManager: {fileID: 36959622}
   musicToggleButton: {fileID: 669106148}
   musicOnSprite: {fileID: 21300000, guid: bf8dbd0ff9389a44b82acd68a24d075a, type: 3}
   musicOffSprite: {fileID: 21300000, guid: ae1226c0a327794468118f6d0399be65, type: 3}
-  selectionCanvas: {fileID: 838123308}
 --- !u!4 &265238609
 Transform:
   m_ObjectHideFlags: 0
@@ -2017,7 +2017,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &329845380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2372,7 +2372,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 265238608}
         m_TargetAssemblyTypeName: BotonesPuzzle, Assembly-CSharp
-        m_MethodName: VolverAlMenuSelection
+        m_MethodName: VolverAlMenuSeleccion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2676,7 +2676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &838123306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3322,7 +3322,7 @@ GameObject:
   - component: {fileID: 1215774890}
   - component: {fileID: 1215774889}
   m_Layer: 5
-  m_Name: Timer
+  m_Name: Wintime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3971,7 +3971,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1395765675}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -4039,7 +4039,7 @@ GameObject:
   - component: {fileID: 1409889967}
   - component: {fileID: 1409889966}
   m_Layer: 5
-  m_Name: Movements
+  m_Name: WinMOves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5124,7 +5124,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1790835860}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

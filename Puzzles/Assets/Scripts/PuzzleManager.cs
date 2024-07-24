@@ -159,14 +159,13 @@ public class PuzzleCreator : MonoBehaviour
             }
         }
         Debug.Log("Puzzle completed!");
-        winSoundSource.PlayOneShot(winClip);
         puzzleCompleted = true; // Set puzzle completion state to true
         if (musicManager != null)
         {
             musicManager.PauseMusic(); // Pause the background music
         }
 
-        StartCoroutine(DisablePuzzleInteractionWithDelay(0.5f)); // Desactivar interacciones del puzzle después de un retraso
+        StartCoroutine(DisablePuzzleInteractionWithDelay(0.2f)); // Desactivar interacciones del puzzle después de un retraso
     }
 
     private IEnumerator DisablePuzzleInteractionWithDelay(float delay)
@@ -175,6 +174,7 @@ public class PuzzleCreator : MonoBehaviour
         foreach (var piece in pieces)
         {
             piece.GetComponent<DraggablePiece>().enabled = false;
+            winSoundSource.PlayOneShot(winClip);
             puzzleButtons.ShowWinCanvas();
 
         }
