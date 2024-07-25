@@ -12,29 +12,33 @@ public class CategoryButton : MonoBehaviour
     // Métodos para botones de categorías
     public void ShowAnimals()
     {
-        _contentManager.LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Animals"));
+        _contentManager.LoadImagesFromAddressables("Animals");
         _canvasCategories.SetActive(false);
         _canvasSelection.SetActive(true);
+
     }
 
     public void ShowAbstract()
     {
-        _contentManager.LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Abstract"));
+        _contentManager.LoadImagesFromAddressables("Abstract");
         _canvasCategories.SetActive(false);
         _canvasSelection.SetActive(true);
+
     }
 
     public void ShowFantasy()
     {
-        _contentManager.LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Fantasy"));
+        _contentManager.LoadImagesFromAddressables("Fantasy");
         _canvasCategories.SetActive(false);
         _canvasSelection.SetActive(true);
+
     }
 
     public void ShowLandscapes()
     {
-        _contentManager.LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Landscapes"));
+        _contentManager.LoadImagesFromAddressables("Landscapes");
         _canvasCategories.SetActive(false);
         _canvasSelection.SetActive(true);
+
     }
 }

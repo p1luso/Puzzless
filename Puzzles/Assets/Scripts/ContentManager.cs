@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Collections;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ContentManager : MonoBehaviour
 {
@@ -192,73 +192,42 @@ public class ContentManager : MonoBehaviour
         }
     }
 
-    // Método para cargar imágenes desde una carpeta
-    internal void LoadImagesFromFolder(string folderPath)
+    // Método para cargar imágenes usando Addressables
+    internal void LoadImagesFromAddressables(string label)
     {
-        // Asegurarse de que el canvas de selección esté activo
-        _canvasSelection.SetActive(true);
-
-        // Limpiar los paneles actuales
+        // Clear existing content panels
         foreach (Transform child in contentParent)
         {
             Destroy(child.gameObject);
         }
-        contentPanels.Clear(); // Clear the list of panels
+        contentPanels.Clear();
 
-        // Obtener archivos de imagen en la carpeta
-        string[] imageFiles = Directory.GetFiles(folderPath, "*.png");
+        Addressables.LoadAssetsAsync<Sprite>(label, null).Completed += OnImagesLoaded;
+    }
 
-        foreach (string file in imageFiles)
+    void OnImagesLoaded(AsyncOperationHandle<IList<Sprite>> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            // Crear un nuevo panel
-            GameObject newPanel = Instantiate(contentPanelPrefab, contentParent);
+            foreach (var sprite in handle.Result)
+            {
+                GameObject newPanel = Instantiate(contentPanelPrefab, contentParent);
+                Image imageComponent = newPanel.GetComponentInChildren<Image>();
+                imageComponent.sprite = sprite;
 
-            // Cargar la imagen
-            byte[] imageData = File.ReadAllBytes(file);
-            Texture2D texture = new Texture2D(2, 2);
-            texture.LoadImage(imageData);
+                RectTransform rectTransform = imageComponent.GetComponent<RectTransform>();
+                rectTransform.sizeDelta = new Vector2(793, 816);
+                imageComponent.color = new Color(1f, 1f, 1f, 1f);
 
-            // Asignar la imagen al panel
-            Image imageComponent = newPanel.GetComponentInChildren<Image>();
-            imageComponent.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                imageComponent.enabled = true;
+                contentPanels.Add(newPanel);
+            }
 
-            // Ajustar tamaño y opacidad
-            RectTransform rectTransform = imageComponent.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(793, 816); // Ajustar tamaño
-            imageComponent.color = new Color(1f, 1f, 1f, 1f); // 100% opacidad
-
-            imageComponent.enabled = true; // Asegurarse de que el componente Image esté activado
-
-            // Añadir el panel a la lista
-            contentPanels.Add(newPanel);
+            ShowContent();
         }
-
-        // Mostrar el primer contenido
-        ShowContent();
-    }
-
-    // Métodos para botones de categorías
-    public void ShowAnimals()
-    {
-        LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Animals"));
-        _canvasCategories.SetActive(false);
-    }
-
-    public void ShowAbstract()
-    {
-        LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Abstract"));
-        _canvasCategories.SetActive(false);
-    }
-
-    public void ShowFantasy()
-    {
-        LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Fantasy"));
-        _canvasCategories.SetActive(false);
-    }
-
-    public void ShowLandscapes()
-    {
-        LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Landscapes"));
-        _canvasCategories.SetActive(false);
+        else
+        {
+            Debug.LogError("Failed to load images from Addressables.");
+        }
     }
 }

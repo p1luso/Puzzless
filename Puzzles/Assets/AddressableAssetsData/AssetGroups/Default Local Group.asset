@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6bfd4674bdcf48f47b7a64ab50943ad1
+  m_SerializeEntries:
+  - m_GUID: 405b41751e9e64b4aaef6090bbc5a145
+    m_Address: Assets/Imagenes/Abstract
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Abstract
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9bd3cb3688e512240ad3cb1ba3de3fcb
+    m_Address: Assets/Imagenes/Animals
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Animals
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2f127db45a2b074cbf369c5f698a917
+    m_Address: Assets/Imagenes/Fantasy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fantasy
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4eecbbf7dc0d39642a6dd5a8b7ab7726
+    m_Address: Assets/Imagenes/Landscapes
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Landscapes
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1f1f199333d55514bb5de8fd14620ecb, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 673a1f384c0c0bf498672055c1739a3e, type: 2}
+    - {fileID: 11400000, guid: 10c61bc5958321440978bf200bf76cee, type: 2}
