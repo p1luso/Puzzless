@@ -15,12 +15,15 @@ public class ScoreManager : MonoBehaviour
     private int pointsPerPeek;
     private int timePenalty;
 
+    private const string TotalScoreKey = "TotalScore";
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadTotalScore();
         }
         else
         {
@@ -57,7 +60,6 @@ public class ScoreManager : MonoBehaviour
         }
 
         points = initialPoints;
-        TotalScore = points; // Initialize TotalScore with the initial points
     }
 
     public void RegisterMove()
@@ -77,13 +79,32 @@ public class ScoreManager : MonoBehaviour
         points -= timePenalty;
     }
 
-    public int GetTotalScore()
-    {
-        return points;
-    }
-
     public void UpdateTotalScore()
     {
-        TotalScore = points; // Update TotalScore with the current points
+        TotalScore += points; // Add points to TotalScore at the end of the game
+        SaveTotalScore();
+    }
+
+    private void LoadTotalScore()
+    {
+        if (PlayerPrefs.HasKey(TotalScoreKey))
+        {
+            TotalScore = PlayerPrefs.GetInt(TotalScoreKey);
+        }
+        else
+        {
+            TotalScore = 0;
+        }
+    }
+
+    private void SaveTotalScore()
+    {
+        PlayerPrefs.SetInt(TotalScoreKey, TotalScore);
+        PlayerPrefs.Save();
+    }
+
+    public int GetTotalScore()
+    {
+        return TotalScore;
     }
 }

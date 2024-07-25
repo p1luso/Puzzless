@@ -169,8 +169,7 @@ public class BotonesPuzzle : MonoBehaviour
         int seconds = Mathf.FloorToInt(elapsedTime % 60F);
         winTimeText.text = $"Time: {minutes}m {seconds}s";
 
-        // Actualizar y mostrar el puntaje total
-        ScoreManager.Instance.UpdateTotalScore();
+        // Mostrar el puntaje total
         winScoreText.text = "Total Score: " + ScoreManager.Instance.TotalScore;
     }
 }

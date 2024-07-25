@@ -47,6 +47,8 @@ public class ContentManager : MonoBehaviour
     public AudioSource buttonAudioSource; // AudioSource para los sonidos de los botones
     public AudioClip buttonClickSound; // Clip de sonido para el click del botón
 
+    //Score manager
+    public ScoreManager scoreManager;
     // Lista para almacenar los paneles de contenido
     private List<GameObject> contentPanels = new List<GameObject>();
 
@@ -59,9 +61,9 @@ public class ContentManager : MonoBehaviour
         // Vincular métodos que reproducen sonido a los eventos onClick de los botones
         nextButton.onClick.AddListener(() => { PlayButtonClickSound(); NextContent(); });
         prevButton.onClick.AddListener(() => { PlayButtonClickSound(); PreviousContent(); });
-        button3x3.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(3); });
-        button4x4.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(4); });
-        button5x5.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(5); });
+        button3x3.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(3); scoreManager.InitializeScore(1); });
+        button4x4.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(4); scoreManager.InitializeScore(2);});
+        button5x5.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(5); scoreManager.InitializeScore(3);});
 
         // Display initial content
         ShowContent();
