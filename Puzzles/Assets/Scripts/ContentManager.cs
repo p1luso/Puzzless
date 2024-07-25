@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,8 @@ public class ContentManager : MonoBehaviour
 {
     [Header("Content Viewport")]
     public Image contentDisplay;
-    public List<GameObject> contentPanels;
+    public Transform contentParent;
+    public GameObject contentPanelPrefab;
 
     [Header("Pagination Buttons")]
     public Button nextButton;
@@ -30,6 +32,7 @@ public class ContentManager : MonoBehaviour
     [Header("Canvas")] 
     [SerializeField] private GameObject _canvasSelection;
     [SerializeField] private GameObject _canvasPuzzle;
+    [SerializeField] private GameObject _canvasCategories;
 
     // Reference to the RectTransform of the content area
     public RectTransform contentArea;
@@ -44,11 +47,15 @@ public class ContentManager : MonoBehaviour
     public AudioSource buttonAudioSource; // AudioSource para los sonidos de los botones
     public AudioClip buttonClickSound; // Clip de sonido para el click del botón
 
+    // Lista para almacenar los paneles de contenido
+    private List<GameObject> contentPanels = new List<GameObject>();
+
     void Start()
     {
-        _canvasSelection.SetActive(true);
+        _canvasSelection.SetActive(false);
         _canvasPuzzle.SetActive(false);
-        
+        _canvasCategories.SetActive(true);
+
         // Vincular métodos que reproducen sonido a los eventos onClick de los botones
         nextButton.onClick.AddListener(() => { PlayButtonClickSound(); NextContent(); });
         prevButton.onClick.AddListener(() => { PlayButtonClickSound(); PreviousContent(); });
@@ -146,7 +153,7 @@ public class ContentManager : MonoBehaviour
             if (isActive)
             {
                 // Update the selected image
-                selectedImage = contentPanels[i].GetComponent<Image>().sprite;
+                selectedImage = contentPanels[i].GetComponentInChildren<Image>().sprite;
 
                 // Reset timer and fill amount when the content is swiped
                 timer = autoMoveTime;
@@ -181,5 +188,75 @@ public class ContentManager : MonoBehaviour
         {
             buttonAudioSource.PlayOneShot(buttonClickSound);
         }
+    }
+
+    // Método para cargar imágenes desde una carpeta
+    internal void LoadImagesFromFolder(string folderPath)
+    {
+        // Asegurarse de que el canvas de selección esté activo
+        _canvasSelection.SetActive(true);
+
+        // Limpiar los paneles actuales
+        foreach (Transform child in contentParent)
+        {
+            Destroy(child.gameObject);
+        }
+        contentPanels.Clear(); // Clear the list of panels
+
+        // Obtener archivos de imagen en la carpeta
+        string[] imageFiles = Directory.GetFiles(folderPath, "*.png");
+
+        foreach (string file in imageFiles)
+        {
+            // Crear un nuevo panel
+            GameObject newPanel = Instantiate(contentPanelPrefab, contentParent);
+
+            // Cargar la imagen
+            byte[] imageData = File.ReadAllBytes(file);
+            Texture2D texture = new Texture2D(2, 2);
+            texture.LoadImage(imageData);
+
+            // Asignar la imagen al panel
+            Image imageComponent = newPanel.GetComponentInChildren<Image>();
+            imageComponent.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+            // Ajustar tamaño y opacidad
+            RectTransform rectTransform = imageComponent.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(793, 816); // Ajustar tamaño
+            imageComponent.color = new Color(1f, 1f, 1f, 1f); // 100% opacidad
+
+            imageComponent.enabled = true; // Asegurarse de que el componente Image esté activado
+
+            // Añadir el panel a la lista
+            contentPanels.Add(newPanel);
+        }
+
+        // Mostrar el primer contenido
+        ShowContent();
+    }
+
+    // Métodos para botones de categorías
+    public void ShowAnimals()
+    {
+        LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Animals"));
+        _canvasCategories.SetActive(false);
+    }
+
+    public void ShowAbstract()
+    {
+        LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Abstract"));
+        _canvasCategories.SetActive(false);
+    }
+
+    public void ShowFantasy()
+    {
+        LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Fantasy"));
+        _canvasCategories.SetActive(false);
+    }
+
+    public void ShowLandscapes()
+    {
+        LoadImagesFromFolder(Path.Combine(Application.dataPath, "Imagenes/Landscapes"));
+        _canvasCategories.SetActive(false);
     }
 }

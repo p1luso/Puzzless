@@ -174,10 +174,10 @@ public class PuzzleCreator : MonoBehaviour
         foreach (var piece in pieces)
         {
             piece.GetComponent<DraggablePiece>().enabled = false;
-            winSoundSource.PlayOneShot(winClip);
-            puzzleButtons.ShowWinCanvas();
-
         }
+        winSoundSource.PlayOneShot(winClip);
+        ScoreManager.Instance.UpdateTotalScore(); // Update the total score in ScoreManager
+        puzzleButtons.ShowWinCanvas(); // Show the win canvas
     }
 
     public void UpdatePiecePositions(DraggablePiece piece1, DraggablePiece piece2)

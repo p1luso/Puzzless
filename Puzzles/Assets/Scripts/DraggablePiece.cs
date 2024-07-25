@@ -62,6 +62,7 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         if (targetPiece != null)
         {
             SwapPositionWith(targetPiece);
+            ScoreManager.Instance.RegisterMove(); // Register the move in ScoreManager
         }
         else
         {
