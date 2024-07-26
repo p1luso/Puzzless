@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puzzleCanvas: {fileID: 297305337}
   menuCanvas: {fileID: 2026953383}
-  puzzleImage: {fileID: 0}
+  puzzleImage: {fileID: 2011179109}
   winCanvas: {fileID: 329845382}
   selecCanvas: {fileID: 838123308}
   puzzleCreator: {fileID: 36959619}
@@ -1897,7 +1897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &297305334
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2115,7 +2115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallpaperManager: {fileID: 329845384}
-  contentManager: {fileID: 1303889847}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3940,7 +3939,6 @@ MonoBehaviour:
   _canvasPuzzle: {fileID: 297305333}
   _canvasCategories: {fileID: 838123305}
   contentArea: {fileID: 0}
-  selectedImage: {fileID: 0}
   puzzleCreator: {fileID: 36959619}
   buttonAudioSource: {fileID: 36959621}
   buttonClickSound: {fileID: 8300000, guid: ddcdd007df01a33499d87b0e62f5fdc2, type: 3}
