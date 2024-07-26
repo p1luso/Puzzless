@@ -1,43 +1,94 @@
 using System.Collections;
-using UnityEngine;
 using System.IO;
+using UnityEngine;
 
 public class WallpaperManager : MonoBehaviour
 {
-    public void SetWallpaper(Sprite sprite)
+    public void SetWallpaper()
     {
-        StartCoroutine(SetWallpaperCoroutine(sprite));
+        if (ContentManager.selectedImage == null)
+        {
+            Debug.LogError("Selected image is null, cannot set wallpaper.");
+            return;
+        }
+
+        StartCoroutine(SetWallpaperCoroutine(ContentManager.selectedImage));
     }
 
     private IEnumerator SetWallpaperCoroutine(Sprite sprite)
     {
+        // Verificar permisos antes de continuar
+        if (!CheckPermissions())
+        {
+            Debug.LogError("Required permissions are not granted.");
+            yield break;
+        }
+
         yield return new WaitForEndOfFrame();
 
-        // Convertir el Sprite a Texture2D
-        Texture2D texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height, TextureFormat.RGBA32, false);
-        texture.SetPixels(sprite.texture.GetPixels((int)sprite.rect.x, (int)sprite.rect.y, (int)sprite.rect.width, (int)sprite.rect.height));
-        texture.Apply();
+        // Convertir el Sprite a una textura legible
+        Texture2D texture = CreateReadableTexture(sprite);
 
         // Guardar la imagen en el almacenamiento externo
         string path = Path.Combine(Application.persistentDataPath, "wallpaper.png");
         File.WriteAllBytes(path, texture.EncodeToPNG());
 
         // Establecer la imagen como fondo de pantalla
-        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-        AndroidJavaClass wallpaperManager = new AndroidJavaClass("android.app.WallpaperManager");
-        AndroidJavaObject wm = wallpaperManager.CallStatic<AndroidJavaObject>("getInstance", currentActivity);
-
-        AndroidJavaClass fileClass = new AndroidJavaClass("java.io.File");
-        AndroidJavaObject fileObject = fileClass.CallStatic<AndroidJavaObject>("createTempFile", "wallpaper", ".png");
-        fileObject.Call("delete");
-        AndroidJavaObject fos = new AndroidJavaObject("java.io.FileOutputStream", fileObject);
-        fos.Call("write", texture.EncodeToPNG());
-        fos.Call("flush");
-        fos.Call("close");
-
-        wm.Call("setStream", new AndroidJavaObject("java.io.FileInputStream", fileObject));
+        SetWallpaperWithIntent(path);
 
         Debug.Log("Wallpaper set successfully!");
+    }
+
+    private Texture2D CreateReadableTexture(Sprite sprite)
+    {
+        RenderTexture rt = RenderTexture.GetTemporary(
+            sprite.texture.width,
+            sprite.texture.height,
+            0,
+            RenderTextureFormat.Default,
+            RenderTextureReadWrite.Linear);
+
+        Graphics.Blit(sprite.texture, rt);
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = rt;
+
+        Texture2D readableTexture = new Texture2D(sprite.texture.width, sprite.texture.height);
+        readableTexture.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+        readableTexture.Apply();
+
+        RenderTexture.active = previous;
+        RenderTexture.ReleaseTemporary(rt);
+
+        return readableTexture;
+    }
+
+    private void SetWallpaperWithIntent(string imagePath)
+    {
+        using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+        {
+            AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+            using (AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent"))
+            {
+                AndroidJavaObject intent = new AndroidJavaObject("android.content.Intent");
+                intent.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_ATTACH_DATA"));
+
+                using (AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri"))
+                {
+                    AndroidJavaObject uri = uriClass.CallStatic<AndroidJavaObject>("parse", "file://" + imagePath);
+                    intent.Call<AndroidJavaObject>("setDataAndType", uri, "image/png");
+                    intent.Call<AndroidJavaObject>("putExtra", "mimeType", "image/png");
+
+                    currentActivity.Call("startActivity", intent);
+                }
+            }
+        }
+    }
+
+    private bool CheckPermissions()
+    {
+        return UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.ExternalStorageWrite) &&
+               UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.ExternalStorageRead) &&
+               UnityEngine.Android.Permission.HasUserAuthorizedPermission("android.permission.SET_WALLPAPER");
     }
 }

@@ -1078,13 +1078,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 329845384}
-        m_TargetAssemblyTypeName: WallpaperManager, Assembly-CSharp
-        m_MethodName: SetWallpaper
-        m_Mode: 2
+      - m_Target: {fileID: 329845385}
+        m_TargetAssemblyTypeName: SetWallpaperButton, Assembly-CSharp
+        m_MethodName: OnSetWallpaperButtonClicked
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1995,6 +1995,7 @@ GameObject:
   - component: {fileID: 329845381}
   - component: {fileID: 329845380}
   - component: {fileID: 329845384}
+  - component: {fileID: 329845385}
   m_Layer: 5
   m_Name: WinCanvas
   m_TagString: Untagged
@@ -2101,6 +2102,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41376cbe7f2ea994ba93ac6e0808df9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &329845385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329845379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70d2be652fe891140aaa1cebdd676c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallpaperManager: {fileID: 329845384}
+  contentManager: {fileID: 1303889847}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2776,6 +2791,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvasCategories: {fileID: 838123305}
   _canvasSelection: {fileID: 2026953380}
+  buttonAudioSource: {fileID: 265238610}
+  buttonClickSound: {fileID: 8300000, guid: ddcdd007df01a33499d87b0e62f5fdc2, type: 3}
   _contentManager: {fileID: 1303889847}
 --- !u!1 &845399761
 GameObject:
@@ -3072,6 +3089,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1000728579}
   - component: {fileID: 1000728578}
+  - component: {fileID: 1000728580}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -3111,6 +3129,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1000728580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000728577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098a65dc9fd777448997345a414362d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1016581183
 GameObject:
   m_ObjectHideFlags: 0
@@ -4737,7 +4767,6 @@ GameObject:
   - component: {fileID: 1618497700}
   - component: {fileID: 1618497699}
   - component: {fileID: 1618497698}
-  - component: {fileID: 1618497702}
   m_Layer: 0
   m_Name: 01_Abstract-ico
   m_TagString: Untagged
@@ -4910,21 +4939,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1618497702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618497696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de75efef72a62f4ab37c885984724aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _canvasCategories: {fileID: 0}
-  _canvasSelection: {fileID: 0}
-  _contentManager: {fileID: 0}
 --- !u!1 &1727707520
 GameObject:
   m_ObjectHideFlags: 0

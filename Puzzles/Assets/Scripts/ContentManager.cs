@@ -38,7 +38,7 @@ public class ContentManager : MonoBehaviour
     public RectTransform contentArea;
 
     // Reference to the selected image
-    public Sprite selectedImage;
+    public static Sprite selectedImage; // Make this static
 
     // Reference to the PuzzleCreator
     public PuzzleCreator puzzleCreator;
