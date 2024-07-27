@@ -7,7 +7,7 @@ public class BotonesPuzzle : MonoBehaviour
     public Canvas menuCanvas; // Canvas del menú
     public Image puzzleImage; // Imagen completa del puzzle
     public Canvas winCanvas; // Canvas de victoria
-    public Canvas selecCanvas; // Canvas de victoria
+    public Canvas selecCanvas; // Canvas de selección
 
     public PuzzleCreator puzzleCreator; // Referencia al script PuzzleCreator
     public GameObject overlayPanel; // Panel transparente para detectar clics fuera de la imagen
@@ -15,6 +15,7 @@ public class BotonesPuzzle : MonoBehaviour
     public Text movementText; // Texto UI para mostrar los movimientos
     public Text winMovesText; // Texto UI para mostrar los movimientos en la pantalla de victoria
     public Text winTimeText; // Texto UI para mostrar el tiempo en la pantalla de victoria
+    public Text winScoreText; // Texto UI para mostrar el puntaje total en la pantalla de victoria
     public AudioSource buttonAudioSource; // AudioSource para los sonidos de los botones
     public AudioClip buttonClickSound; // Clip de sonido para el click del botón
     public MusicManager musicManager;
@@ -80,11 +81,12 @@ public class BotonesPuzzle : MonoBehaviour
         isTimerRunning = false; // Detener el temporizador
         ResetTimer(); // Reiniciar el temporizador y contador de movimientos al volver al menú
     }
+
     public void VolverAlMenuSeleccion()
     {
         PlayButtonClickSound();
         menuCanvas.gameObject.SetActive(false); // Desactivar el canvas del juego
-        selecCanvas.gameObject.SetActive(true); // Activar el canvas del menú
+        selecCanvas.gameObject.SetActive(true); // Activar el canvas del menú de selección
         winCanvas.gameObject.SetActive(false);
         isTimerRunning = false; // Detener el temporizador
         ResetTimer(); // Reiniciar el temporizador y contador de movimientos al volver al menú
@@ -166,5 +168,8 @@ public class BotonesPuzzle : MonoBehaviour
         int minutes = Mathf.FloorToInt(elapsedTime / 60F);
         int seconds = Mathf.FloorToInt(elapsedTime % 60F);
         winTimeText.text = $"Time: {minutes}m {seconds}s";
+
+        // Mostrar el puntaje total
+        winScoreText.text = "Total Score: " + ScoreManager.Instance.TotalScore;
     }
 }

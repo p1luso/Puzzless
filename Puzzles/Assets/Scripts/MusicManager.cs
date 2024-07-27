@@ -8,6 +8,7 @@ public class MusicManager : MonoBehaviour
     public float fadeDuration = 1.0f; // Duración del fade in/out en segundos
 
     private int currentTrackIndex = 0; // Índice de la canción actual
+    private bool isMusicActive = true; // Flag para controlar el estado de reproducción
 
     private void Start()
     {
@@ -21,15 +22,22 @@ public class MusicManager : MonoBehaviour
     {
         while (true)
         {
-            audioSource.clip = musicClips[currentTrackIndex];
-            audioSource.Play();
-            yield return StartCoroutine(FadeIn(audioSource, fadeDuration));
+            if (isMusicActive)
+            {
+                audioSource.clip = musicClips[currentTrackIndex];
+                audioSource.Play();
+                yield return StartCoroutine(FadeIn(audioSource, fadeDuration));
 
-            yield return new WaitForSeconds(audioSource.clip.length - fadeDuration);
+                yield return new WaitForSeconds(audioSource.clip.length - fadeDuration);
 
-            yield return StartCoroutine(FadeOut(audioSource, fadeDuration));
+                yield return StartCoroutine(FadeOut(audioSource, fadeDuration));
 
-            currentTrackIndex = (currentTrackIndex + 1) % musicClips.Length;
+                currentTrackIndex = (currentTrackIndex + 1) % musicClips.Length;
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 
@@ -63,11 +71,18 @@ public class MusicManager : MonoBehaviour
 
     public void PauseMusic()
     {
+        isMusicActive = false;
         audioSource.Pause();
     }
 
     public void ResumeMusic()
     {
+        isMusicActive = true;
         audioSource.UnPause();
+    }
+
+    public bool IsMusicActive()
+    {
+        return isMusicActive;
     }
 }

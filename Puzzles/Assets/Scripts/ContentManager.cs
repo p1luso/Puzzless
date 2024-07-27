@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ContentManager : MonoBehaviour
 {
     [Header("Content Viewport")]
     public Image contentDisplay;
-    public List<GameObject> contentPanels;
+    public Transform contentParent;
+    public GameObject contentPanelPrefab;
 
     [Header("Pagination Buttons")]
     public Button nextButton;
@@ -30,12 +32,13 @@ public class ContentManager : MonoBehaviour
     [Header("Canvas")] 
     [SerializeField] private GameObject _canvasSelection;
     [SerializeField] private GameObject _canvasPuzzle;
+    [SerializeField] private GameObject _canvasCategories;
 
     // Reference to the RectTransform of the content area
     public RectTransform contentArea;
 
     // Reference to the selected image
-    public Sprite selectedImage;
+    public static Sprite selectedImage; // Make this static
 
     // Reference to the PuzzleCreator
     public PuzzleCreator puzzleCreator;
@@ -44,17 +47,23 @@ public class ContentManager : MonoBehaviour
     public AudioSource buttonAudioSource; // AudioSource para los sonidos de los botones
     public AudioClip buttonClickSound; // Clip de sonido para el click del botón
 
+    //Score manager
+    public ScoreManager scoreManager;
+    // Lista para almacenar los paneles de contenido
+    private List<GameObject> contentPanels = new List<GameObject>();
+
     void Start()
     {
-        _canvasSelection.SetActive(true);
+        _canvasSelection.SetActive(false);
         _canvasPuzzle.SetActive(false);
-        
+        _canvasCategories.SetActive(true);
+
         // Vincular métodos que reproducen sonido a los eventos onClick de los botones
         nextButton.onClick.AddListener(() => { PlayButtonClickSound(); NextContent(); });
         prevButton.onClick.AddListener(() => { PlayButtonClickSound(); PreviousContent(); });
-        button3x3.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(3); });
-        button4x4.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(4); });
-        button5x5.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(5); });
+        button3x3.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(3); scoreManager.InitializeScore(1); });
+        button4x4.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(4); scoreManager.InitializeScore(2);});
+        button5x5.onClick.AddListener(() => { PlayButtonClickSound(); StartPuzzle(5); scoreManager.InitializeScore(3);});
 
         // Display initial content
         ShowContent();
@@ -146,7 +155,7 @@ public class ContentManager : MonoBehaviour
             if (isActive)
             {
                 // Update the selected image
-                selectedImage = contentPanels[i].GetComponent<Image>().sprite;
+                selectedImage = contentPanels[i].GetComponentInChildren<Image>().sprite;
 
                 // Reset timer and fill amount when the content is swiped
                 timer = autoMoveTime;
@@ -180,6 +189,45 @@ public class ContentManager : MonoBehaviour
         if (buttonAudioSource != null && buttonClickSound != null)
         {
             buttonAudioSource.PlayOneShot(buttonClickSound);
+        }
+    }
+
+    // Método para cargar imágenes usando Addressables
+    internal void LoadImagesFromAddressables(string label)
+    {
+        // Clear existing content panels
+        foreach (Transform child in contentParent)
+        {
+            Destroy(child.gameObject);
+        }
+        contentPanels.Clear();
+
+        Addressables.LoadAssetsAsync<Sprite>(label, null).Completed += OnImagesLoaded;
+    }
+
+    void OnImagesLoaded(AsyncOperationHandle<IList<Sprite>> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            foreach (var sprite in handle.Result)
+            {
+                GameObject newPanel = Instantiate(contentPanelPrefab, contentParent);
+                Image imageComponent = newPanel.GetComponentInChildren<Image>();
+                imageComponent.sprite = sprite;
+
+                RectTransform rectTransform = imageComponent.GetComponent<RectTransform>();
+                rectTransform.sizeDelta = new Vector2(793, 816);
+                imageComponent.color = new Color(1f, 1f, 1f, 1f);
+
+                imageComponent.enabled = true;
+                contentPanels.Add(newPanel);
+            }
+
+            ShowContent();
+        }
+        else
+        {
+            Debug.LogError("Failed to load images from Addressables.");
         }
     }
 }

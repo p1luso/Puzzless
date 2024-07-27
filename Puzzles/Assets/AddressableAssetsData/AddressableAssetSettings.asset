@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
+  m_Name: AddressableAssetSettings
+  m_EditorClassIdentifier: 
+  m_DefaultGroup: 6bfd4674bdcf48f47b7a64ab50943ad1
+  m_currentHash:
+    serializedVersion: 2
+    Hash: f49872f7dced9a5eb56c3ad9d7ec10b4
+  m_OptimizeCatalogSize: 0
+  m_BuildRemoteCatalog: 0
+  m_BundleLocalCatalog: 0
+  m_CatalogRequestsTimeout: 0
+  m_DisableCatalogUpdateOnStart: 0
+  m_IgnoreUnsupportedFilesInBuild: 0
+  m_UniqueBundleIds: 0
+  m_NonRecursiveBuilding: 1
+  m_CCDEnabled: 0
+  m_maxConcurrentWebRequests: 3
+  m_ContiguousBundles: 1
+  m_StripUnityVersionFromBundleBuild: 0
+  m_DisableVisibleSubAssetRepresentations: 0
+  m_ShaderBundleNaming: 0
+  m_ShaderBundleCustomNaming: 
+  m_MonoScriptBundleNaming: 0
+  m_CheckForContentUpdateRestrictionsOption: 0
+  m_MonoScriptBundleCustomNaming: 
+  m_RemoteCatalogBuildPath:
+    m_Id: 
+  m_RemoteCatalogLoadPath:
+    m_Id: 
+  m_ContentStateBuildPathProfileVariableName: 
+  m_CustomContentStateBuildPath: 
+  m_ContentStateBuildPath: 
+  m_BuildAddressablesWithPlayerBuild: 0
+  m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
+  m_GroupAssets:
+  - {fileID: 11400000, guid: 9e4ceb922ccafb44a8fbb8ce78516c24, type: 2}
+  - {fileID: 11400000, guid: 52d9e24ec385143438aa6effe273678b, type: 2}
+  m_BuildSettings:
+    m_CompileScriptsInVirtualMode: 0
+    m_CleanupStreamingAssetsAfterBuilds: 1
+    m_LogResourceManagerExceptions: 1
+    m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
+  m_ProfileSettings:
+    m_Profiles:
+    - m_InheritedParent: 
+      m_Id: e995d15019dc096469ce5eec8d9732bd
+      m_ProfileName: Default
+      m_Values:
+      - m_Id: cb35b2219fbef094396fae416768f5b9
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: f94e3b1b19b2f1c4ba02c3127b370bff
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: ead5b1ff58f985f42b95f629ae7370b5
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 667fbd719a8074d4ca29d30d7207afdc
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: d6eeac090cba89d44a5d6a0fb6c931f3
+        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+    m_ProfileEntryNames:
+    - m_Id: cb35b2219fbef094396fae416768f5b9
+      m_Name: BuildTarget
+      m_InlineUsage: 0
+    - m_Id: f94e3b1b19b2f1c4ba02c3127b370bff
+      m_Name: Local.BuildPath
+      m_InlineUsage: 0
+    - m_Id: ead5b1ff58f985f42b95f629ae7370b5
+      m_Name: Local.LoadPath
+      m_InlineUsage: 0
+    - m_Id: 667fbd719a8074d4ca29d30d7207afdc
+      m_Name: Remote.BuildPath
+      m_InlineUsage: 0
+    - m_Id: d6eeac090cba89d44a5d6a0fb6c931f3
+      m_Name: Remote.LoadPath
+      m_InlineUsage: 0
+    m_ProfileVersion: 1
+  m_LabelTable:
+    m_LabelNames:
+    - default
+    - Animals
+    - Abstract
+    - Fantasy
+    - Landscapes
+  m_SchemaTemplates: []
+  m_GroupTemplateObjects:
+  - {fileID: 11400000, guid: d488119a04147294bb9329a31d318fbb, type: 2}
+  m_InitializationObjects: []
+  m_CertificateHandlerType:
+    m_AssemblyName: 
+    m_ClassName: 
+  m_ActivePlayerDataBuilderIndex: 3
+  m_DataBuilders:
+  - {fileID: 11400000, guid: 5610715eaa11ea944a6d0606ca6c3e20, type: 2}
+  - {fileID: 11400000, guid: 5ac84809a7a1dad43b987af8e55a7844, type: 2}
+  - {fileID: 11400000, guid: fa3049b381958be4c97f000935dbeaef, type: 2}
+  - {fileID: 11400000, guid: 6880f5710ac2c6c459f19f3e56b60a94, type: 2}
+  m_ActiveProfileId: e995d15019dc096469ce5eec8d9732bd
+  m_HostingServicesManager:
+    m_HostingServiceInfos: []
+    m_Settings: {fileID: 11400000}
+    m_NextInstanceId: 0
+    m_RegisteredServiceTypeRefs: []
+    m_PingTimeoutInMilliseconds: 5000
