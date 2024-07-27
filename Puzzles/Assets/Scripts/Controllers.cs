@@ -46,6 +46,14 @@ public class BotonesPuzzle : MonoBehaviour
         else if (winCanvas.isActiveAndEnabled)
         {
             isTimerRunning = false;
+            musicManager.PauseMusic();
+        }
+        else
+        {
+            if (isMusicOn)
+            {
+                musicManager.ResumeMusic();
+            }
         }
 
         if (isTimerRunning)
@@ -161,7 +169,6 @@ public class BotonesPuzzle : MonoBehaviour
     {
         winCanvas.gameObject.SetActive(true); // Activar el canvas de victoria
         isTimerRunning = false; // Detener el temporizador
-
         // Mostrar los movimientos y el tiempo en la pantalla de victoria
         winMovesText.text = "Moves: " + DraggablePiece.movementCounter;
 

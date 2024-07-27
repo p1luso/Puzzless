@@ -24,7 +24,6 @@ public class MusicManager : MonoBehaviour
         {
             if (isMusicActive)
             {
-                currentTrackIndex = GetRandomTrackIndex();
                 audioSource.clip = musicClips[currentTrackIndex];
                 audioSource.Play();
                 yield return StartCoroutine(FadeIn(audioSource, fadeDuration));
@@ -32,17 +31,14 @@ public class MusicManager : MonoBehaviour
                 yield return new WaitForSeconds(audioSource.clip.length - fadeDuration);
 
                 yield return StartCoroutine(FadeOut(audioSource, fadeDuration));
+
+                currentTrackIndex = UnityEngine.Random.Range(0, musicClips.Length); // Selecciona una canción aleatoria
             }
             else
             {
                 yield return null;
             }
         }
-    }
-
-    private int GetRandomTrackIndex()
-    {
-        return Random.Range(0, musicClips.Length);
     }
 
     private IEnumerator FadeIn(AudioSource audioSource, float duration)
@@ -70,6 +66,7 @@ public class MusicManager : MonoBehaviour
         }
 
         audioSource.volume = 0;
+        audioSource.Stop();
     }
 
     public void PauseMusic()
@@ -82,10 +79,6 @@ public class MusicManager : MonoBehaviour
     {
         isMusicActive = true;
         audioSource.UnPause();
-        if (!audioSource.isPlaying)
-        {
-            StartCoroutine(PlayMusic());
-        }
     }
 
     public bool IsMusicActive()
