@@ -8,7 +8,7 @@ public class SetWallpaperButton : MonoBehaviour
     {
         if (wallpaperManager != null)
         {
-            wallpaperManager.SetWallpaper();
+            wallpaperManager.SetWallpaper(ContentManager.selectedImage);
         }
     }
 }
