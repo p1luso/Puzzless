@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class WallpaperManager : MonoBehaviour
 {
-    public void SetWallpaper()
+    public void SetWallpaper(Sprite sprite)
     {
-        if (ContentManager.selectedImage == null)
+        if (sprite == null)
         {
             Debug.LogError("Selected image is null, cannot set wallpaper.");
             return;
         }
 
-        StartCoroutine(SetWallpaperCoroutine(ContentManager.selectedImage));
+        StartCoroutine(SetWallpaperCoroutine(sprite));
     }
 
     private IEnumerator SetWallpaperCoroutine(Sprite sprite)
     {
-        // Verificar permisos antes de continuar
-        if (!CheckPermissions())
-        {
-            Debug.LogError("Required permissions are not granted.");
-            yield break;
-        }
-
         yield return new WaitForEndOfFrame();
 
         // Convertir el Sprite a una textura legible
@@ -33,10 +26,17 @@ public class WallpaperManager : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "wallpaper.png");
         File.WriteAllBytes(path, texture.EncodeToPNG());
 
-        // Establecer la imagen como fondo de pantalla
-        SetWallpaperWithIntent(path);
-
-        Debug.Log("Wallpaper set successfully!");
+        Debug.Log("Image saved at: " + path);
+        if (File.Exists(path))
+        {
+            Debug.Log("File exists and ready to be used as wallpaper.");
+            // Establecer la imagen como fondo de pantalla
+            SetWallpaperWithIntent(path);
+        }
+        else
+        {
+            Debug.LogError("Failed to save the image.");
+        }
     }
 
     private Texture2D CreateReadableTexture(Sprite sprite)
@@ -70,8 +70,7 @@ public class WallpaperManager : MonoBehaviour
 
             using (AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent"))
             {
-                AndroidJavaObject intent = new AndroidJavaObject("android.content.Intent");
-                intent.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_ATTACH_DATA"));
+                AndroidJavaObject intent = new AndroidJavaObject("android.content.Intent", intentClass.GetStatic<string>("ACTION_ATTACH_DATA"));
 
                 using (AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri"))
                 {
@@ -83,12 +82,5 @@ public class WallpaperManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    private bool CheckPermissions()
-    {
-        return UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.ExternalStorageWrite) &&
-               UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.ExternalStorageRead) &&
-               UnityEngine.Android.Permission.HasUserAuthorizedPermission("android.permission.SET_WALLPAPER");
     }
 }
