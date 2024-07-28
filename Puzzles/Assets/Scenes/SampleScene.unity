@@ -1385,6 +1385,7 @@ MonoBehaviour:
   puzzleImage: {fileID: 2011179109}
   winCanvas: {fileID: 329845382}
   selecCanvas: {fileID: 838123308}
+  adManager: {fileID: 1612732966}
   puzzleCreator: {fileID: 36959619}
   overlayPanel: {fileID: 1900185478}
   timerText: {fileID: 254643244}
@@ -4739,6 +4740,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1612732964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1612732965}
+  - component: {fileID: 1612732966}
+  m_Layer: 0
+  m_Name: Ads
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1612732965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612732964}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 645, y: 1505, z: -14.152615}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1612732966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612732964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8de7e1700bb6cb46bdda3d9ff5236bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adUnitId: 
 --- !u!1 &1618497696
 GameObject:
   m_ObjectHideFlags: 0
@@ -5898,3 +5944,4 @@ SceneRoots:
   - {fileID: 36959620}
   - {fileID: 1000728579}
   - {fileID: 265238609}
+  - {fileID: 1612732965}
