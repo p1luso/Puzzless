@@ -160,11 +160,6 @@ public class PuzzleCreator : MonoBehaviour
         }
         Debug.Log("Puzzle completed!");
         puzzleCompleted = true; // Set puzzle completion state to true
-        if (musicManager != null)
-        {
-            musicManager.PauseMusic(); // Pause the background music
-        }
-
         StartCoroutine(DisablePuzzleInteractionWithDelay(0.2f)); // Desactivar interacciones del puzzle después de un retraso
     }
 

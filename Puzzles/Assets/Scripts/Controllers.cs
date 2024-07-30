@@ -8,7 +8,7 @@ public class BotonesPuzzle : MonoBehaviour
     public Image puzzleImage; // Imagen completa del puzzle
     public Canvas winCanvas; // Canvas de victoria
     public Canvas selecCanvas; // Canvas de selección
-
+    public AdManager adManager;
     public PuzzleCreator puzzleCreator; // Referencia al script PuzzleCreator
     public GameObject overlayPanel; // Panel transparente para detectar clics fuera de la imagen
     public Text timerText; // Texto UI para mostrar el temporizador
@@ -46,6 +46,14 @@ public class BotonesPuzzle : MonoBehaviour
         else if (winCanvas.isActiveAndEnabled)
         {
             isTimerRunning = false;
+            musicManager.PauseMusic();
+        }
+        else
+        {
+            if (isMusicOn)
+            {
+                musicManager.ResumeMusic();
+            }
         }
 
         if (isTimerRunning)
@@ -159,12 +167,13 @@ public class BotonesPuzzle : MonoBehaviour
 
     public void ShowWinCanvas()
     {
+        adManager.LoadInterstitialAd();
+        adManager.ShowInterstitialAd();
         winCanvas.gameObject.SetActive(true); // Activar el canvas de victoria
         isTimerRunning = false; // Detener el temporizador
-
         // Mostrar los movimientos y el tiempo en la pantalla de victoria
         winMovesText.text = "Moves: " + DraggablePiece.movementCounter;
-
+        
         int minutes = Mathf.FloorToInt(elapsedTime / 60F);
         int seconds = Mathf.FloorToInt(elapsedTime % 60F);
         winTimeText.text = $"Time: {minutes}m {seconds}s";
