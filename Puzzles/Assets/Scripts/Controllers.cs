@@ -167,18 +167,20 @@ public class BotonesPuzzle : MonoBehaviour
 
     public void ShowWinCanvas()
     {
-        adManager.LoadInterstitialAd();
-        adManager.ShowInterstitialAd();
+        adManager.RequestInterstitial(); // Mueve esto a un punto donde necesites cargar el anuncio antes de mostrarlo.
         winCanvas.gameObject.SetActive(true); // Activar el canvas de victoria
         isTimerRunning = false; // Detener el temporizador
         // Mostrar los movimientos y el tiempo en la pantalla de victoria
         winMovesText.text = "Moves: " + DraggablePiece.movementCounter;
-        
+
         int minutes = Mathf.FloorToInt(elapsedTime / 60F);
         int seconds = Mathf.FloorToInt(elapsedTime % 60F);
         winTimeText.text = $"Time: {minutes}m {seconds}s";
 
         // Mostrar el puntaje total
         winScoreText.text = "Total Score: " + ScoreManager.Instance.TotalScore;
+
+        // Mostrar anuncio intersticial
+        adManager.ShowInterstitialAd();
     }
 }

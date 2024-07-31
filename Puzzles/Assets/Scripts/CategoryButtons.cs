@@ -44,6 +44,15 @@ public class CategoryButton : MonoBehaviour
 
     }
     
+    public void ShowArt()
+    {
+        PlayButtonClickSound();
+        _contentManager.LoadImagesFromAddressables("Art");
+        _canvasCategories.SetActive(false);
+        _canvasSelection.SetActive(true);
+
+    }
+    
     private void PlayButtonClickSound()
     {
         if (buttonAudioSource != null && buttonClickSound != null)

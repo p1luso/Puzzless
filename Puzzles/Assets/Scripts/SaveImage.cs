@@ -7,12 +7,18 @@ public class SaveImageManager : MonoBehaviour
 {
     public Button saveButton; // Asocia el botón en el Inspector
 
-    void Start()
+    private void Start()
     {
-        saveButton.onClick.AddListener(SaveImage);
+        saveButton.onClick.AddListener(OnSaveButtonClicked);
     }
 
-    public void SaveImage()
+    private void OnDestroy()
+    {
+        // Remove listener to prevent potential memory leaks or duplicated calls.
+        saveButton.onClick.RemoveListener(OnSaveButtonClicked);
+    }
+
+    private void OnSaveButtonClicked()
     {
         StartCoroutine(SaveImageCoroutine());
     }
@@ -40,7 +46,9 @@ public class SaveImageManager : MonoBehaviour
             Directory.CreateDirectory(folderPath);
         }
 
-        string filePath = Path.Combine(folderPath, "savedImage.png");
+        // Generar un nombre de archivo único utilizando timestamp
+        string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string filePath = Path.Combine(folderPath, "savedImage_" + timestamp + ".png");
         File.WriteAllBytes(filePath, texture.EncodeToPNG());
 
         // Agregar la imagen a la galería

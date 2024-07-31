@@ -20,13 +20,15 @@ public class AdManager : MonoBehaviour
         {
             // This callback is called once the MobileAds SDK is initialized.
         });
-        this.RequestInterstitial();
+        RequestBanner();
+        LoadAd();
     }
+    
 
     //InterstitialAds
 
 
-    private void RequestInterstitial()
+    internal void RequestInterstitial()
     {
 #if UNITY_ANDROID
         string adUnitId = "ca-app-pub-3940256099942544/1033173712";
@@ -126,4 +128,56 @@ public class AdManager : MonoBehaviour
             Debug.LogError("Interstitial ad is not ready yet.");
         }
     }
+    
+    private void RequestBanner()
+    {
+#if UNITY_ANDROID
+        string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+#elif UNITY_IPHONE
+            string adUnitId = "";
+#else
+            string adUnitId = "unexpected_platform";
+#endif
+        /// <summary>
+        /// Creates a 320x40 banner view at bottom of the screen.
+        /// </summary>
+        /// 
+        Debug.Log("Creating banner view");
+        // Create a 320x50 banner at top of the screen
+        _bannerView = new BannerView(adUnitId, AdSize.IABBanner, AdPosition.Bottom);
+
+    }
+
+    /// <summary>
+    /// Destroys the banner view.
+    /// </summary>
+    public void DestroyAd()
+    {
+        if (_bannerView != null)
+        {
+            Debug.Log("Destroying banner view.");
+            _bannerView.Destroy();
+            _bannerView = null;
+        }
+    }
+
+    public void LoadAd()
+    {
+        // create an instance of a banner view first.
+        if (_bannerView == null)
+        {
+            Debug.Log("Creating banner view");
+
+            // Create a 320x50 banner at top of the screen
+            _bannerView = new BannerView(adUnitId, AdSize.IABBanner, AdPosition.Bottom);
+        }
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        Debug.Log("Loading banner ad.");
+        _bannerView.LoadAd(adRequest);
+    }
+    
 }

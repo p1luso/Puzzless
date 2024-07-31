@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 6bfd4674bdcf48f47b7a64ab50943ad1
   m_currentHash:
     serializedVersion: 2
-    Hash: f49872f7dced9a5eb56c3ad9d7ec10b4
+    Hash: efa0b65e77a91cba8fdde8407e7a9722
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -91,6 +91,7 @@ MonoBehaviour:
     - Abstract
     - Fantasy
     - Landscapes
+    - Art
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: d488119a04147294bb9329a31d318fbb, type: 2}

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class PuzzleCreator : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class PuzzleCreator : MonoBehaviour
     {
         _winCanvas.SetActive(false);
     }
+
+  
 
     // Method to create puzzle without shuffling pieces
     public void CreatePuzzleWithoutShuffle(Sprite puzzleImage, int gridSize)
@@ -146,6 +149,9 @@ public class PuzzleCreator : MonoBehaviour
         {
             CheckCompletion();
         }
+        
+        
+        
     }
 
     public void CheckCompletion()

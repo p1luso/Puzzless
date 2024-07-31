@@ -20,7 +20,7 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         canvas = GetComponentInParent<Canvas>();
         originalScale = rectTransform.localScale;
     }
-    
+
     public void Initialize(PuzzleCreator creator)
     {
         puzzleCreator = creator;
@@ -30,6 +30,7 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     {
         originalPosition = rectTransform.localPosition;
         isDragging = true;
+        rectTransform.localScale = originalScale; // Ensure the scale is reset at the start of dragging
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -68,6 +69,7 @@ public class DraggablePiece : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         {
             rectTransform.localPosition = originalPosition;
         }
+        rectTransform.localScale = originalScale; // Ensure the scale is reset when dragging ends
     }
 
     public void SwapPositionWith(DraggablePiece otherPiece)

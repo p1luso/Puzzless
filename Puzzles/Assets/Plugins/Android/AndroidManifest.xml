@@ -9,8 +9,6 @@
 
     <!-- AdMob App ID meta-data -->
     <application>
-        <!-- Tu ID de aplicación de AdMob, reemplaza "YOUR_ADMOB_APP_ID" con tu ID de aplicación real -->
-
         <activity android:name="com.unity3d.player.UnityPlayerActivity"
                   android:theme="@style/UnityThemeSelector">
             <intent-filter>

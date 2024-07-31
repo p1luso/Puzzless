@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Landscapes
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4f242784f42932438c0b097eac7b6c0
+    m_Address: Assets/Imagenes/Art
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Art
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1f1f199333d55514bb5de8fd14620ecb, type: 2}
   m_SchemaSet:
