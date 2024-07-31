@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Puzzles
-  productName: Puzzles
+  companyName: Puzzle Magic
+  productName: Puzzle Magic
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -140,10 +140,7 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 1.0.2
-  preloadedAssets:
-  - {fileID: 878103017473834001, guid: d25aeaaec5c82ad48a745a5d2977b247, type: 2}
-  - {fileID: 11400000, guid: b6e857b97e1f2834980640e8ec7274f6, type: 2}
-  - {fileID: 11400000, guid: e8b83f17b207c4746b4c0ab3719d74ab, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

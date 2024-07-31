@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="Puzzle Magic">
+          package="com.eufemiaVisual.puzzlemagic">
 
     <!-- Permisos para el almacenamiento externo -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -9,6 +9,7 @@
 
     <!-- AdMob App ID meta-data -->
     <application>
+        
         <activity android:name="com.unity3d.player.UnityPlayerActivity"
                   android:theme="@style/UnityThemeSelector">
             <intent-filter>
