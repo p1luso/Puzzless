@@ -18,15 +18,7 @@ public class CategoryButton : MonoBehaviour
         _canvasCategories.SetActive(false);
         _canvasSelection.SetActive(true);
     }
-
-    public void ShowAbstract()
-    {
-        PlayButtonClickSound();
-        _contentManager.LoadImagesFromAddressables("Abstract");
-        _canvasCategories.SetActive(false);
-        _canvasSelection.SetActive(true);
-    }
-
+    
     public void ShowFantasy()
     {
         PlayButtonClickSound();

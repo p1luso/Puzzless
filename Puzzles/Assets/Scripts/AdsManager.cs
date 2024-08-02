@@ -144,7 +144,7 @@ public class AdManager : MonoBehaviour
         /// 
         Debug.Log("Creating banner view");
         // Create a 320x50 banner at top of the screen
-        _bannerView = new BannerView(adUnitId, AdSize.IABBanner, AdPosition.Bottom);
+        _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 
     }
 
@@ -169,7 +169,7 @@ public class AdManager : MonoBehaviour
             Debug.Log("Creating banner view");
 
             // Create a 320x50 banner at top of the screen
-            _bannerView = new BannerView(adUnitId, AdSize.IABBanner, AdPosition.Bottom);
+            _bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
         }
 
         // create our request used to load the ad.
