@@ -90,6 +90,11 @@ public class BotonesPuzzle : MonoBehaviour
         ResetTimer(); // Reiniciar el temporizador y contador de movimientos al volver al menú
     }
 
+    public void SalirDelJuego()
+    {
+        Application.Quit();
+    }
+
     public void VolverAlMenuSeleccion()
     {
         PlayButtonClickSound();
